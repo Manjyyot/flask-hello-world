@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'iammanjyyot/my-flask-hello-world'
-        DOCKER_TAG = 'latest'
+        DOCKER_CREDENTIALS = 'docker-hub-cred' // Use the credentials ID you created
     }
 
     stages {
@@ -16,9 +15,20 @@ pipeline {
         stage('Set Up Python Environment') {
             steps {
                 script {
-                    // Set up virtual environment and install dependencies
-                    sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate && pip install -r requirements.txt'
+                    // Using bash to ensure virtual environment is set up properly
+                    sh '/bin/bash -c "python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt"'
+                }
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                script {
+                    // Use Docker Hub credentials from Jenkins credentials manager
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        // Log into Docker Hub
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    }
                 }
             }
         }
@@ -27,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+                    sh 'docker build -t iammanjyyot/my-flask-hello-world:latest .'
                 }
             }
         }
@@ -36,22 +46,25 @@ pipeline {
             steps {
                 script {
                     // Push Docker image to Docker Hub
-                    sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
+                    sh 'docker push iammanjyyot/my-flask-hello-world:latest'
                 }
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                // Deploy your app to production here (this is just an example)
-                echo 'Deploying to production...'
+                script {
+                    // Add your deployment steps here, like SSH to your EC2 and pulling the Docker image
+                    echo 'Deploying to production...'
+                }
             }
         }
     }
 
     post {
         always {
-            cleanWs() // Clean workspace after the job
+            // Clean workspace after job is done
+            cleanWs()
         }
     }
 }
