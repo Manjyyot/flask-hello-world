@@ -2,70 +2,56 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'my-flask-app:latest'
+        DOCKER_IMAGE = 'iammanjyyot/my-flask-hello-world'
+        DOCKER_TAG = 'latest'
     }
 
     stages {
-        stage('Checkout SCM') {
+        stage('Checkout Code') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Install dependencies') {
+        stage('Set Up Python Environment') {
             steps {
                 script {
-                    sh '''
-                        python3 -m venv venv
-                        . venv/bin/activate
-                        pip install -r requirements.txt
-                    '''
+                    // Set up virtual environment and install dependencies
+                    sh 'python3 -m venv venv'
+                    sh 'source venv/bin/activate && pip install -r requirements.txt'
                 }
             }
         }
 
-        stage('Run tests') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    sh '''
-                        . venv/bin/activate
-                        pytest
-                    '''
+                    // Build Docker image
+                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
                 }
             }
         }
 
-        stage('Build Docker image') {
+        stage('Push Docker Image') {
             steps {
                 script {
-                    sh '''
-                        . venv/bin/activate
-                        docker build -t $DOCKER_IMAGE .
-                    '''
+                    // Push Docker image to Docker Hub
+                    sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
                 }
             }
         }
 
-        stage('Push Docker image') {
+        stage('Deploy to Production') {
             steps {
-                script {
-                    sh '''
-                        . venv/bin/activate
-                        docker push $DOCKER_IMAGE
-                    '''
-                }
+                // Deploy your app to production here (this is just an example)
+                echo 'Deploying to production...'
             }
         }
+    }
 
-        stage('Deploy to production') {
-            steps {
-                script {
-                    sh '''
-                        . venv/bin/activate
-                        docker run -d $DOCKER_IMAGE
-                    '''
-                }
-            }
+    post {
+        always {
+            cleanWs() // Clean workspace after the job
         }
     }
 }
