@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        FLASK_APP = 'main.py'
-        FLASK_RUN_HOST = '0.0.0.0'
+        DOCKER_IMAGE = 'my-flask-app:latest'
     }
 
     stages {
@@ -16,8 +15,11 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 script {
-                    sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate && pip install -r requirements.txt'
+                    sh '''
+                        python3 -m venv venv
+                        . venv/bin/activate
+                        pip install -r requirements.txt
+                    '''
                 }
             }
         }
@@ -25,41 +27,43 @@ pipeline {
         stage('Run tests') {
             steps {
                 script {
-                    sh 'source venv/bin/activate && pytest'
+                    sh '''
+                        . venv/bin/activate
+                        pytest
+                    '''
                 }
             }
         }
 
         stage('Build Docker image') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
-                    sh 'docker build -t your-image-name .'
+                    sh '''
+                        . venv/bin/activate
+                        docker build -t $DOCKER_IMAGE .
+                    '''
                 }
             }
         }
 
         stage('Push Docker image') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
-                    sh 'docker tag your-image-name your-repository/your-image-name:latest'
-                    sh 'docker push your-repository/your-image-name:latest'
+                    sh '''
+                        . venv/bin/activate
+                        docker push $DOCKER_IMAGE
+                    '''
                 }
             }
         }
 
         stage('Deploy to production') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
-                    sh 'docker run -d -p 5000:5000 your-repository/your-image-name:latest'
+                    sh '''
+                        . venv/bin/activate
+                        docker run -d $DOCKER_IMAGE
+                    '''
                 }
             }
         }
