@@ -37,42 +37,40 @@ This project demonstrates the basics of building a simple API using Flask. It in
 
 4. **Start the Flask server**:
 
-  ```bash
-  flask run
-  Visit http://127.0.0.1:5000/ to see the API in action
+    ```sh
+    flask run
+    Visit [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to see the API in action.
 
-5. **API Endpoints**:
+5. ## **API Endpoints**:
 
-GET /:
-Returns "Hello, World!"
+- **GET /**  
+  Returns `"Hello, World!"`
 
-GET /hello:
-Returns "Hello!"
+- **GET /hello**  
+  Returns `"Hello!"`
 
-GET /hello/{name}:
-Returns a personalized greeting.
+- **GET /hello/{name}**  
+  Returns a personalized greeting.
 
-6. **Running Tests**:
 
-## **To run tests, use**:
+## **Running Tests**:
 
-```bash
-pytest
+5. To run tests, use:
+    ```bash
+    pytest
 
-## **Deployment**:
+## **Deployment** (v1.0.0)
 
-AWS EC2
-Follow the steps to deploy on AWS EC2 by setting up an instance, installing dependencies, and running the app.
+### AWS EC2  
+Follow the steps to deploy on **AWS EC2**:  
+1. Set up an EC2 instance.  
+2. Install necessary dependencies.  
+3. Run the Flask app.
 
-Docker
+### Docker  
 Build and run the Docker container with:
 
-```bash
-docker build -t flask-hello-world-api .
-docker run -p 5000:5000 flask-hello-world-api
+  ```bash
+  docker build -t flask-hello-world-api .
+  docker run -p 5000:5000 flask-hello-world-api
 
-## **Contributing**:
-Fork the repository, create a new branch, make changes, and submit a pull request.
-
-License
-MIT License.
