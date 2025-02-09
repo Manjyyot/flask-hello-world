@@ -29,17 +29,20 @@ This project demonstrates the basics of building a simple API using Flask. It in
    .\venv\Scripts\activate  # Windows
 
 3. Install dependencies:
-pip install -r requirements.txt
+  
+   ```bash
+   pip install -r requirements.txt
 
 ## Running the Application:
 
-1. **Start the Flask server**:
+4. **Start the Flask server**:
 
   ```bash
   flask run
   Visit http://127.0.0.1:5000/ to see the API in action
 
-2. **API Endpoints**:
+5. **API Endpoints**:
+
   GET /:
   Returns "Hello, World!"
 
@@ -49,7 +52,7 @@ pip install -r requirements.txt
   GET /hello/{name}:
   Returns a personalized greeting.
 
-3. **Running Tests**:
+6. **Running Tests**:
 
 ## **To run tests, use**:
 
@@ -57,17 +60,18 @@ pip install -r requirements.txt
   pytest
 
 ## **Deployment**:
+
 AWS EC2
 Follow the steps to deploy on AWS EC2 by setting up an instance, installing dependencies, and running the app.
 
 Docker
 Build and run the Docker container with:
 
-```bash
-docker build -t flask-hello-world-api .
-docker run -p 5000:5000 flask-hello-world-api
+  ```bash
+  docker build -t flask-hello-world-api .
+  docker run -p 5000:5000 flask-hello-world-api
 
-Contributing:
+## **Contributing**:
 Fork the repository, create a new branch, make changes, and submit a pull request.
 
 License
