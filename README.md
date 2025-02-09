@@ -70,7 +70,6 @@ Follow the steps to deploy on **AWS EC2**:
 ### Docker  
 Build and run the Docker container with:
 
-    ```bash
     docker build -t flask-hello-world-api .
     docker run -p 5000:5000 flask-hello-world-api
 
@@ -88,7 +87,6 @@ The pipeline automates the following tasks:
 
 The **Jenkins pipeline** is defined in the 
   
-    ```bash
     pipeline {
     agent any
 
@@ -166,3 +164,15 @@ The **Jenkins pipeline** is defined in the
         }
     }
     }
+
+##Automated CI/CD with Jenkins
+Every push to the main branch of this repository triggers an automatic build process on the Jenkins server. The pipeline handles the following:
+
+1. Code Checkout: Pulls the latest changes from the repository.
+2. Python Environment Setup: Creates a virtual environment and installs the necessary dependencies.
+3. Docker Build and Push: Builds a Docker image of the Flask application and pushes it to Docker Hub.
+4. Email Notifications: Sends build results to the specified email address, with success and failure notifications.
+
+The entire process ensures that the application is automatically built and deployed with every change, providing you with real-time feedback on the build status via email.
+
+
