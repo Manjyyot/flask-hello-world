@@ -165,7 +165,7 @@ The **Jenkins pipeline** is defined in the
     }
     }
 
-##Automated CI/CD with Jenkins
+## **Automated CI/CD with Jenkins**
 Every push to the main branch of this repository triggers an automatic build process on the Jenkins server. The pipeline handles the following:
 
 1. Code Checkout: Pulls the latest changes from the repository.
@@ -174,5 +174,15 @@ Every push to the main branch of this repository triggers an automatic build pro
 4. Email Notifications: Sends build results to the specified email address, with success and failure notifications.
 
 The entire process ensures that the application is automatically built and deployed with every change, providing you with real-time feedback on the build status via email.
+
+## **Contributing**:
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Submit a pull request.
+
+## **License**:
+  MIT License.
+
 
 
