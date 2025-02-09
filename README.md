@@ -43,21 +43,21 @@ This project demonstrates the basics of building a simple API using Flask. It in
 
 5. **API Endpoints**:
 
-  GET /:
-  Returns "Hello, World!"
+GET /:
+Returns "Hello, World!"
 
-  GET /hello:
-  Returns "Hello!"
+GET /hello:
+Returns "Hello!"
 
-  GET /hello/{name}:
-  Returns a personalized greeting.
+GET /hello/{name}:
+Returns a personalized greeting.
 
 6. **Running Tests**:
 
 ## **To run tests, use**:
 
-  ```bash
-  pytest
+```bash
+pytest
 
 ## **Deployment**:
 
@@ -67,9 +67,9 @@ Follow the steps to deploy on AWS EC2 by setting up an instance, installing depe
 Docker
 Build and run the Docker container with:
 
-  ```bash
-  docker build -t flask-hello-world-api .
-  docker run -p 5000:5000 flask-hello-world-api
+```bash
+docker build -t flask-hello-world-api .
+docker run -p 5000:5000 flask-hello-world-api
 
 ## **Contributing**:
 Fork the repository, create a new branch, make changes, and submit a pull request.
